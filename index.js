@@ -38,6 +38,14 @@ app.use(function (req, res, next) {
 let ListRoom = []
 var users = [];
 
+app.post('/getMessages', (req, res) => {
+  var sql = `select id_user_send, id_user_receive, content from chat where (id_user_send = '${req.body.id_user_send}' and id_user_receive = '${req.body.id_user_receive}') or (id_user_receive = '${req.body.id_user_send}' and id_user_send = '${req.body.id_user_receive}')`;
+  conn.query(sql, (err, data) => {
+    if (err) throw err
+    res.send(data)
+  })
+}) // gửi tin nhắn riêng tư
+
 // Logic các bước của game
 io.on("connection", function (socket) {
   console.log('Kết nối thành công vs ' + socket.id)
