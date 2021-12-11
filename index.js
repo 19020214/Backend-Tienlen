@@ -367,6 +367,15 @@ app.post('/login', (req, res) => {
   })
 }) // đăng nhập
 
+app.post('/sendEdit', (req, res) => {
+  const { idUser, url, userName } = req.body;
+  console.log(req.body)
+  var sql = `update user_game set url = ${url}, user_name = '${userName}' where id_user = '${idUser}'`
+  console.log(sql)
+  conn.query(sql, (err, data) => {
+    res.send(true)
+  })
+}) // sửa ảnh đại diện
 app.post('/signup', (req, res) => {
 
   const { email, password } = req.body;
